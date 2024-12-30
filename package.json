@@ -1,0 +1,33 @@
+{
+  "name": "seointro",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "check-node": "ts-node check-node-version.ts",
+    "dev": "npm run check-node && nodemon",
+    "build": "tsc",
+    "postbuild": "copyfiles -u 1 \"views/**/*\" dist/views",
+    "serve": "node dist/bin/www.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.7",
+    "debug": "~4.4.0",
+    "express": "~4.21.2",
+    "http-errors": "~2.0.0",
+    "morgan": "~1.10.0",
+    "pug": "3.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/debug": "^4.1.12",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.10.2",
+    "@types/semver": "^7.5.8",
+    "copyfiles": "^2.4.1",
+    "semver": "^7.6.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
