@@ -6,7 +6,7 @@ import app from '../app';
 import debugLib from 'debug';
 import { AddressInfo } from 'net';
 
-const debug = debugLib('backend:server');
+const debug = debugLib('seointro:server');
 
 /**
  * Get port from environment and store in Express.

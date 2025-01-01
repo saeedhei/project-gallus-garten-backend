@@ -1,4 +1,4 @@
-npx express-generator --view=pug myapp
+npx express-generator --view=pug seointro
 
 npx npm-check-updates -u
 or
@@ -20,3 +20,23 @@ npm install
 
    run the app:
      > SET DEBUG=seointro:* & npm start
+
+
+https://github.com/coreybutler/nvm-windows/releases
+nvm-setup.exe
+nvm version
+nvm list available
+nvm install 16.20.0 
+nvm install 22.11.0
+nvm use 22.11.0
+node -v
+echo 22.11.0 > .nvmrc
+nvm use 22.11.0
+
+npm ls inflight glob
+npm outdated
+npm update
+
+
+
+
