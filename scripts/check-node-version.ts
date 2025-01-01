@@ -2,6 +2,7 @@
 // npm install --save-dev @types/semver
 import semver from 'semver';
 
+// please update .nvmrc file too 
 const requiredVersion: string = '22.12.0'; // This can be modified to a specific version if needed
 const currentVersion: string = process.versions.node; // Directly access the global process variable
 

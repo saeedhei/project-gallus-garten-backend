@@ -27,8 +27,8 @@ nvm-setup.exe
 nvm version
 nvm list available
 nvm install 16.20.0 
-nvm install 22.11.0
-nvm use 22.11.0
+nvm install 22.12.0
+nvm use 22.12.0
 node -v
 echo 22.11.0 > .nvmrc
 nvm use 22.11.0
@@ -38,7 +38,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "tsconfig updated"
+git commit -m "nvmrc  updated"
 git push origin main
 
 
