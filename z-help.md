@@ -37,6 +37,10 @@ npm ls inflight glob
 npm outdated
 npm update
 
+git add .
+git commit -m "tsconfig updated"
+git push origin main
+
 
 
 
