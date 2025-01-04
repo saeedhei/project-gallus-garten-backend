@@ -7,26 +7,17 @@ ncu
 ncu -u
 npm install
 
+change directory: > cd seointro
 
+install dependencies: > npm install
 
-
-
-
- change directory:
-     > cd seointro
-
-   install dependencies:
-     > npm install
-
-   run the app:
-     > SET DEBUG=seointro:* & npm start
-
+SET DEBUG=seointro:\* & npm start
 
 https://github.com/coreybutler/nvm-windows/releases
 nvm-setup.exe
 nvm version
 nvm list available
-nvm install 16.20.0 
+nvm install 16.20.0
 nvm install 22.12.0
 nvm use 22.12.0
 node -v
@@ -38,9 +29,11 @@ npm outdated
 npm update
 
 git add .
-git commit -m "nvmrc  updated"
+git commit -m "Couchdb added"
 git push origin main
 
-
-
-
+connections.ts
+couchHelper.ts
+userRepository.ts
+userService.ts
+userController.ts

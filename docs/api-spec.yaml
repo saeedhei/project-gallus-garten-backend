@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: My LMS API
+  description: API documentation for the Learning Management System (LMS)
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000/api'
+    description: Local development server
+paths:
+  /users:
+    get:
+      summary: Get all users
+      description: Fetches a list of all users in the system
+      operationId: getAllUsers
+      tags:
+        - Users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      description: Fetches a single user by their ID
+      operationId: getUserById
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: string
+        '404':
+          description: User not found
+
+  /auth/login:
+    post:
+      summary: User login
+      description: Authenticates a user and returns a JWT token
+      operationId: loginUser
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Invalid credentials

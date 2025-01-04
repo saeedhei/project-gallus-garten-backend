@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import http from 'http';
-import app from '../app'; 
-// npm install --save-dev @types/debug       
+import app from '../src/app';
+// npm install --save-dev @types/debug
 import debugLib from 'debug';
 import { AddressInfo } from 'net';
 
@@ -57,20 +57,16 @@ function onError(error: NodeJS.ErrnoException) {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
-      break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
-      break;
     default:
       throw error;
   }
@@ -82,11 +78,9 @@ function onError(error: NodeJS.ErrnoException) {
 
 function onListening() {
   const addr = server.address() as AddressInfo;
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   const blue = '\x1b[34m';
-  const reset = '\x1b[0m';  
+  const reset = '\x1b[0m';
   console.log(`Listening on ${blue}http://localhost:${port}/${reset}`);
   debug('Listening on ' + bind);
 }

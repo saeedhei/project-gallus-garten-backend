@@ -1,5 +1,4 @@
 import { promises as fsPromises } from 'fs';
-import * as fs from 'fs';
 import * as path from 'path';
 
 const srcDir = path.resolve(__dirname, '../views');
