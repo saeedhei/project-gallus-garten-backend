@@ -30,7 +30,7 @@ npm update
 
 git add .
 git commit -m "www updated"
-git push origin main 
+git push origin main
 
 connections.ts
 couchHelper.ts
