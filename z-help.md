@@ -29,8 +29,8 @@ npm outdated
 npm update
 
 git add .
-git commit -m "Couchdb added"
-git push origin main
+git commit -m "www updated"
+git push origin main 
 
 connections.ts
 couchHelper.ts
