@@ -11,7 +11,10 @@ change directory: > cd seointro
 
 install dependencies: > npm install
 
-SET DEBUG=seointro:\* & npm start
+MacOS or Linux
+DEBUG=myapp:* npm start
+windows
+set DEBUG=seointro:* & npm run dev
 
 https://github.com/coreybutler/nvm-windows/releases
 nvm-setup.exe
@@ -29,7 +32,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "error fixed"
+git commit -m "without next function in app.ts pug error template not work - fixed"
 git push origin main
 
 connections.ts
