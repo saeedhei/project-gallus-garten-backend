@@ -1,4 +1,4 @@
-import nano, { DocumentScope, DocumentInsertResponse, MangoQuery, MaybeDocument } from 'nano';
+import { DocumentScope, DocumentInsertResponse, MangoQuery, MaybeDocument } from 'nano';
 import { connectToDatabase } from '../../infrastructure/database/connections';
 
 // Insert Document function

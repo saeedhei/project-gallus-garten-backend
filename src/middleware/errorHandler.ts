@@ -1,9 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
-export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction): void => {
+export const errorHandler = (err: any, req: Request, res: Response): void => {
   console.error(err.stack);
   res.status(500).json({ message: err.message || 'Something went wrong!' });
 };
+
+// import { Request, Response, NextFunction } from 'express';
+
+// export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction): void => {
+//   console.error(err.stack);
+//   res.status(500).json({ message: err.message || 'Something went wrong!' });
+// };
 
 // import express from 'express';
 // import router from './routes';

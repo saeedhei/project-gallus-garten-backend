@@ -29,7 +29,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "www updated"
+git commit -m "error fixed"
 git push origin main
 
 connections.ts
