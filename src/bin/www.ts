@@ -1,9 +1,11 @@
-import app from '../src/app';
+import 'dotenv/config';
+import app from '../app';
 import debug from 'debug';
 import http from 'http';
 
-const log: debug.Debugger = debug('seoinro:server');
-const port = normalizePort(process.env.PORT || '3000');
+const { PORT } = process.env;
+const log: debug.Debugger = debug('gallusgarten:server');
+const port = normalizePort(PORT || '3000');
 
 app.set('port', port);
 

@@ -1,14 +1,9 @@
-# Express-TypeScript-Boilerplate
-
-An opinionated boilerplate for building web applications with Express and TypeScript.
-
 ## Table of Contents
 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Scripts](#scripts)
-- [Project Structure](#project-structure)
 - [Technologies](#technologies)
 - [Contributing](#contributing)
 - [License](#license)
@@ -19,7 +14,6 @@ An opinionated boilerplate for building web applications with Express and TypeSc
 - Pre-configured ESLint and Prettier for consistent code style.
 - Nodemon for automatic server reload during development.
 - Build process with TypeScript Compiler (`tsc`).
-- Modular file structure to keep your code organized.
 - Includes basic middleware: cookie-parser, morgan, and error handling.
 - Pug as the default template engine.
 
@@ -30,32 +24,25 @@ An opinionated boilerplate for building web applications with Express and TypeSc
 
 ## Getting Started
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/saeedhei/Express-TypeScript-Boilerplate.git
-   cd Express-TypeScript-Boilerplate
-   ```
-
-2. Install dependencies:
+1. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Run the development server:
+2. Run the development server:
 
    ```bash
    npm run dev
    ```
 
-4. Build the project:
+3. Build the project:
 
    ```bash
    npm run build
    ```
 
-5. Serve the built project:
+4. Serve the built project:
    ```bash
    npm run serve
    ```
@@ -70,77 +57,6 @@ The following scripts are available in `package.json`:
 - **`npm run build`**: Compiles TypeScript into JavaScript.
 - **`npm run serve`**: Runs the compiled code from the `dist` directory.
 
-## Project Structure
-
-```plaintext
-Express-TypeScript-Boilerplate/
-├── src/
-│   ├── core/
-│   │   ├── config/
-│   │   │   ├── development.js
-│   │   │   ├── production.js
-│   │   │   ├── test.js
-│   │   │   └── index.js          # Consolidates configurations
-│   │   ├── utils/
-│   │   │   ├── validators.js     # Validation helpers
-│   │   │   ├── stringHelpers.js  # String manipulation helpers
-│   │   │   └── index.js          # Exports all utils
-│   │   ├── exceptions/
-│   │   │   ├── BaseException.js
-│   │   │   ├── NotFoundException.js
-│   │   │   └── index.js          # Exports all exceptions
-│   │   └── models/
-│   │       ├── BaseModel.js      # Base model (if needed)
-│   │       └── index.js          # Consolidates models
-│   ├── domain/
-│   │   ├── users/
-│   │   │   ├── services/
-│   │   │   │   ├── userService.js
-│   │   │   ├── controllers/
-│   │   │   │   ├── userController.js
-│   │   │   ├── repositories/
-│   │   │   │   ├── userRepository.js
-│   │   │   ├── models/
-│   │   │   │   ├── user.js
-│   │   │   ├── routes.js         # User-related routes
-│   │   │   └── index.js          # Exports all user modules
-│   │   ├── products/
-│   │   │   ├── services/
-│   │   │   │   ├── productService.js
-│   │   │   ├── controllers/
-│   │   │   │   ├── productController.js
-│   │   │   ├── repositories/
-│   │   │   │   ├── productRepository.js
-│   │   │   ├── models/
-│   │   │   │   ├── product.js
-│   │   │   ├── routes.js         # Product-related routes
-│   │   │   └── index.js          # Exports all product modules
-│   ├── infrastructure/
-│   │   ├── database/
-│   │   │   ├── connections.js    # Database connections (e.g., MongoDB, PostgreSQL)
-│   │   │   ├── migrations/       # Database migration files
-│   │   │   └── seeds/            # Seed data for development/testing
-│   │   ├── cache/
-│   │   │   ├── redisClient.js    # Redis cache client
-│   │   ├── messaging/
-│   │   │   ├── rabbitmqProducer.js  # RabbitMQ integration
-│   │   ├── third_party/
-│   │   │   ├── paymentGateway.js # Third-party integrations
-│   │   └── index.js              # Consolidates infrastructure modules
-│   ├── app.js                    # Application entry point
-│   ├── server.js                 # Server initialization
-│   └── package.json
-├── tests/
-│   ├── unit/
-│   │   ├── userService.test.js
-│   │   ├── ...
-│   ├── integration/
-│   │   ├── userController.test.js
-│   │   ├── ...
-│   ├── e2e/
-│       ├── ...
-└── package.json
-```
 
 ## Technologies
 

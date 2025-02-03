@@ -1,8 +1,11 @@
 import { promises as fsPromises } from 'fs';
 import * as path from 'path';
 
-const srcDir = path.resolve(__dirname, '../views');
+const srcDir = path.resolve(__dirname, '../src/views');
 const destDir = path.resolve(__dirname, '../dist/views');
+
+const srcPublic = path.resolve(__dirname, '../src/public');
+const destPublic = path.resolve(__dirname, '../dist/public');
 
 /**
  * Recursively copies a directory from the source to the destination.
@@ -50,6 +53,15 @@ function handleError(error: unknown): void {
   try {
     await copyDirectory(srcDir, destDir);
     console.log(`Copied files from ${srcDir} to ${destDir}`);
+  } catch (error) {
+    handleError(error);
+  }
+})();
+
+(async () => {
+  try {
+    await copyDirectory(srcPublic, destPublic);
+    console.log(`Copied files from ${srcPublic} to ${destPublic}`);
   } catch (error) {
     handleError(error);
   }

@@ -32,7 +32,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "without next function in app.ts pug error template not work - fixed"
+git commit -m "npm serve updated"
 git push origin main
 
 connections.ts
