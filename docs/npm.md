@@ -32,7 +32,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "npm serve updated"
+git commit -m "npm help in docs folder moved"
 git push origin main
 
 connections.ts
