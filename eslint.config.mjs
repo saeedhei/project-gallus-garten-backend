@@ -3,7 +3,8 @@ import parser from '@typescript-eslint/parser';
 
 export default [
   {
-    files: ['**/*.ts'], // Match all TypeScript files
+    // files: ['**/*.ts'], // Match all TypeScript files
+    files: ['src/**/*.ts'],
     ignores: ['**/*.config.mjs', '!**/eslint.config.mjs'], // Ignore specific files
     languageOptions: {
       parser: parser, // Use the TypeScript parser
