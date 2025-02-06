@@ -1,0 +1,52 @@
+doctype html
+html
+  head
+    title= message || 'Error'
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap")
+    style.
+      body {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background: #f6f8fa;
+        color: #333;
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 8rem;
+        margin: 0;
+        color: #ff6f61;
+      }
+      p {
+        font-size: 1.5rem;
+        margin: 20px 0;
+      }
+      a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #0078d7;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
+      a:hover {
+        background: #005bb5;
+      }
+  body
+    .container
+      h1= message || 'Error'
+      h2= error.status
+      pre #{error.stack}
+      a(href="/") Go Back to Home

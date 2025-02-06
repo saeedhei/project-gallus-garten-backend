@@ -21,10 +21,10 @@ nvm-setup.exe
 nvm version
 nvm list available
 nvm install 16.20.0
-nvm install 22.12.0
-nvm use 22.12.0
+nvm install 22.13.1
+nvm use 22.13.1
 node -v
-echo 22.11.0 > .nvmrc
+echo 22.13.1 > .nvmrc
 nvm use 22.11.0
 
 npm ls inflight glob
@@ -32,7 +32,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "npm help in docs folder moved"
+git commit -m "updated node 22.13.1 because of server"
 git push origin main
 
 connections.ts
@@ -40,3 +40,6 @@ couchHelper.ts
 userRepository.ts
 userService.ts
 userController.ts
+
+
+npm install --omit=dev
