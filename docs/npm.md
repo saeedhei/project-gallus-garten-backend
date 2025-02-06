@@ -26,6 +26,8 @@ nvm use 22.13.1
 node -v
 echo 22.13.1 > .nvmrc
 nvm use 22.11.0
+nvm list
+nvm uninstall 22.12.0
 
 npm ls inflight glob
 npm outdated
