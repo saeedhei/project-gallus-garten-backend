@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "check-node": "ts-node scripts/check-node-version.ts",
+    "check-env": "ts-node scripts/checkEnv.ts",
     "lint": "eslint . --fix",
-    "dev": "npm run check-node && nodemon",
+    "dev": "npm run check-node && npm run check-env && nodemon",
     "build": "tsc",
     "postbuild": "ts-node scripts/copy-files.ts",
     "serve": "node dist/bin/www.js"

@@ -34,7 +34,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "updated node 22.13.1 because of server"
+git commit -m "check required environment variables"
 git push origin main
 
 connections.ts
