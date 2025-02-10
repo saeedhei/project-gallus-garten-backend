@@ -2,8 +2,7 @@ import express from 'express';
 import { useDatabase } from '../db/couchdb';
 
 const router = express.Router();
-const dbName = 'gallusgarten';
-const db = useDatabase(dbName);
+const db = useDatabase(process.env.DB_NAME || 'default_database_name');
 
 interface ImageDocument {
   _id: string;

@@ -2,8 +2,7 @@ import express, { Request, Response } from 'express';
 import { useDatabase } from '../db/couchdb';
 
 const router = express.Router();
-const dbName = 'gallusgarten'; // CouchDB database name
-const db = useDatabase(dbName);
+const db = useDatabase(process.env.DB_NAME || 'default_database_name');
 
 // Get all images or search by publicId
 router.get('/', async (req: Request, res: Response) => {
