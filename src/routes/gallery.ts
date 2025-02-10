@@ -2,8 +2,7 @@ import express, { Request, Response } from 'express';
 import { useDatabase } from '../db/couchdb';
 
 const router = express.Router();
-const dbName = 'gallusgarten';
-const db = useDatabase(dbName);
+const db = useDatabase(process.env.DB_NAME || 'default_database_name');
 
 router.get('/', async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
@@ -11,11 +10,15 @@ router.get('/', async (req: Request, res: Response) => {
   const imagesPerPage = 15;
 
   try {
+    // Base selector: Fetch only public images
     const selector: any = { isPublic: true };
+
+    // Fix: Proper tag filtering
     if (tag) {
-      selector.tags = { $elemMatch: tag };
+      selector.tags = { $in: [tag] }; // Checks if the tag exists in the array
     }
 
+    // Query CouchDB with pagination
     const response = await db.find({
       selector: selector,
       limit: imagesPerPage,
