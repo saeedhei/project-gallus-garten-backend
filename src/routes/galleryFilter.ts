@@ -7,23 +7,23 @@ const db = useDatabase(process.env.DB_NAME || 'default_database_name');
 interface ImageDocument {
   _id: string;
   _rev: string;
-  tags?: string[];
+  categories?: string[];
 }
 
 router.get('/', async (req, res) => {
   try {
     const response = await db.find({
-      selector: { tags: { $exists: true } }, // Get only docs with tags
-      fields: ['_id', '_rev', 'tags'],
+      selector: { categories: { $exists: true } }, // Get only docs with tags
+      fields: ['_id', '_rev', 'categories'],
     });
 
     // Flatten all "tags" arrays and remove duplicates
-    const allTags = response.docs.flatMap((doc: ImageDocument) => doc.tags || []);
-    const uniqueTags = [...new Set(allTags)];
-    res.json({ tags: uniqueTags }); // Respond with the unique tags
+    const allCategories = response.docs.flatMap((doc: ImageDocument) => doc.categories || []);
+    const uniqueCategories = [...new Set(allCategories)];
+    res.json({ categories: uniqueCategories }); // Respond with the unique tags
   } catch (error) {
-    console.error('Error processing tags:', error);
-    res.status(500).json({ error: 'Failed to process tags' });
+    console.error('Error processing categories:', error);
+    res.status(500).json({ error: 'Failed to process categories' });
   }
 });
 
