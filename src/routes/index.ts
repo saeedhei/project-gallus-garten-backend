@@ -14,7 +14,7 @@ router.get('/', (req: Request, res: Response): void => {
 router.use('/api', yearRoutes);
 router.use('/api', categoryRoutes);
 router.use('/api/images', galleryRouter);
-router.use('/api/images/categories', galleryCategories);
+router.use('/api/images/filter', galleryCategories);
 router.use('/api/adminPanelDash', adminDash);
 router.use('/api/login', adminLogin);
 
