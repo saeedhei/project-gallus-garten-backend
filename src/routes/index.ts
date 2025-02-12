@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import galleryRouter from './gallery';
-import galleryFilter from './galleryFilter';
+import galleryCategories from './galleryCategories';
 import adminDash from './adminDash';
 import adminLogin from './adminLogin';
 import yearRoutes from './yearRoutes';
@@ -14,7 +14,7 @@ router.get('/', (req: Request, res: Response): void => {
 router.use('/api', yearRoutes);
 router.use('/api', categoryRoutes);
 router.use('/api/images', galleryRouter);
-router.use('/api/images/filter', galleryFilter);
+router.use('/api/images/categories', galleryCategories);
 router.use('/api/adminPanelDash', adminDash);
 router.use('/api/login', adminLogin);
 

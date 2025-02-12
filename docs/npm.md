@@ -34,8 +34,10 @@ npm outdated
 npm update
 
 git add .
-git commit -m "check required environment variables"
+git commit -m "Categories Filter Fixed"
 git push origin main
+
+
 
 connections.ts
 couchHelper.ts
@@ -45,3 +47,8 @@ userController.ts
 
 
 npm install --omit=dev
+
+
+# If you don’t need your local changes, reset the file:
+git checkout -- src/routes/gallery.ts
+git pull origin main
