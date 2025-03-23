@@ -13,31 +13,29 @@ if (!GALLUS_ADMIN_USER || !GALLUS_ADMIN_PASSWORD || !JWT_SECRET) {
   throw new Error('Required environment variables are not set.');
 }
 
-// Debugging environment variables
-console.log('🔑 GALLUS_ADMIN_USER:', GALLUS_ADMIN_USER);
-console.log('🔑 GALLUS_ADMIN_PASSWORD:', GALLUS_ADMIN_PASSWORD);
-console.log('🔑 JWT_SECRET:', JWT_SECRET);
+// console.log('GALLUS_ADMIN_USER:', GALLUS_ADMIN_USER);
+// console.log('GALLUS_ADMIN_PASSWORD:', GALLUS_ADMIN_PASSWORD);
+// console.log('JWT_SECRET:', JWT_SECRET);
 
 // Passport Local Strategy
 passport.use(
   new LocalStrategy(async (username: string, password: string, done: any) => {
     try {
-      console.log('🔍 Checking username:', username);
+      // console.log('Checking username:', username);
       if (username !== GALLUS_ADMIN_USER) {
-        console.log('❌ Invalid username');
+        console.log('Invalid username');
         return done(null, false, { message: 'Invalid username or password' });
       }
 
-      console.log('🔍 Checking password...');
       if (password !== GALLUS_ADMIN_PASSWORD) {
-        console.log('❌ Invalid password');
+        // console.log('Invalid password');
         return done(null, false, { message: 'Invalid username or password' });
       }
 
-      console.log('✅ Login successful');
+      // console.log('Login successful');
       return done(null, { username });
     } catch (err) {
-      console.error('❌ Error during authentication:', err);
+      console.error('Error during authentication:', err);
       return done(err);
     }
   }),
@@ -53,7 +51,7 @@ app.use(
     secret: JWT_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 6000 }, // 10 minutes
+    cookie: { maxAge: 6000 },
   }),
 );
 app.use(passport.initialize());
@@ -63,21 +61,21 @@ app.use(passport.session());
 router.post('/', (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate('local', (err: any, user: any, info: any) => {
     if (err) {
-      console.error('❌ Authentication Error:', err);
+      console.error('Authentication Error:', err);
       return next(err);
     }
     if (!user) {
-      console.log('❌ User not found:', info.message);
+      // console.log('User not found:', info.message);
       return res.status(401).json({ success: false, message: info.message });
     }
 
     try {
-      const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' });
-      console.log('✅ Generated Token:', token);
+      const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '5s' });
+      // console.log('Generated Token:', token);
 
       res.status(200).json({ success: true, token, message: 'Login successful' });
     } catch (error) {
-      console.error('❌ JWT Signing Error:', error);
+      console.error('JWT Signing Error:', error);
       res.status(500).json({ success: false, message: 'Failed to generate token' });
     }
   })(req, res, next);
@@ -87,9 +85,9 @@ const ensureAuthenticated = (req: Request, res: Response, next: NextFunction): v
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
-    console.log('❌ No token provided');
+    // console.log('No token provided');
     res.status(401).json({ message: 'Access denied. No token provided.' });
-    return; // ✅ Ensure function exits
+    return;
   }
 
   try {
@@ -97,17 +95,17 @@ const ensureAuthenticated = (req: Request, res: Response, next: NextFunction): v
 
     // Check if token is expired
     if (decoded.exp * 1000 < Date.now()) {
-      console.log('⏳ Token expired');
+      console.log('Token expired');
       res.status(401).json({ message: 'Session expired. Please log in again.' });
-      return; // ✅ Ensure function exits
+      return;
     }
 
     req.user = decoded;
-    next(); // ✅ Continue to next middleware
+    next();
   } catch (error) {
-    console.error('❌ Invalid token:', error);
+    console.error('Invalid token:', error);
     res.status(400).json({ message: 'Invalid token.' });
-    return; // ✅ Ensure function exits
+    return;
   }
 };
 
