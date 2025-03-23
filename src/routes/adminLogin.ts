@@ -70,7 +70,7 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
     }
 
     try {
-      const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '5s' });
+      const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '30m' });
       // console.log('Generated Token:', token);
 
       res.status(200).json({ success: true, token, message: 'Login successful' });
