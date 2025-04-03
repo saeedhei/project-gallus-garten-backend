@@ -1,5 +1,5 @@
 import express, { Request, Response, RequestHandler } from 'express';
-import { useDatabase } from '../db/couchdb';
+import { useDatabase } from '../db/couchdb.js';
 
 const router = express.Router();
 const db = useDatabase(process.env.DB_NAME || 'default_database_name');

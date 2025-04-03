@@ -1,11 +1,12 @@
-import 'dotenv/config';
-import app from '../app';
+// import 'dotenv/config';
+import config from '../core/config/index.js';
+import app from '../app.js';
 import debug from 'debug';
 import http from 'http';
 
-const { PORT } = process.env;
+// const { PORT } = process.env;
 const log: debug.Debugger = debug('gallusgarten:server');
-const port = normalizePort(PORT || '3000');
+const port = normalizePort(config.port || '3000');
 
 app.set('port', port);
 

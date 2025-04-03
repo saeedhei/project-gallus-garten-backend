@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from 'express';
-import { useDatabase } from '../db/couchdb';
+import { useDatabase } from '../db/couchdb.js';
 import axios from 'axios';
 
 const router: Router = express.Router();
