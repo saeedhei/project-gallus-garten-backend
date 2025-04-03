@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
-import galleryRouter from './gallery';
-import galleryCategories from './galleryCategories';
-import adminDash from './adminDash';
-import adminLogin from './adminLogin';
-import yearRoutes from './yearRoutes';
-import categoryRoutes from './categoryRoutes';
+import galleryRouter from './gallery.js';
+import galleryCategories from './galleryCategories.js';
+import adminDash from './adminDash.js';
+import adminLogin from './adminLogin.js';
+import yearRoutes from './yearRoutes.js';
+import categoryRoutes from './categoryRoutes.js';
 const router = express.Router();
 
 /* GET home page. */

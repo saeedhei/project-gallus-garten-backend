@@ -4,10 +4,14 @@ import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import { fileURLToPath } from 'url';
 
-import indexRouter from './routes/index';
-
+import indexRouter from './routes/index.js';
+import { testConnection } from './db/testConnection.js';
 const app: express.Application = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -21,6 +25,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
+(async () => {
+  try {
+    await testConnection();
+  } catch (error) {
+    console.error("Error during app startup:", error)
+    process.exit(1)
+  }
+})
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createError(404));
 });

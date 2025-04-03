@@ -2,6 +2,7 @@
   "name": "gallusgarten",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "check-node": "ts-node scripts/check-node-version.ts",
     "check-env": "ts-node scripts/checkEnv.ts",
@@ -42,6 +43,7 @@
     "@types/semver": "^7.5.8",
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.19.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2",

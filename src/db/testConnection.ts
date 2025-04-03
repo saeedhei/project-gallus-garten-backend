@@ -1,13 +1,14 @@
-import { useDatabase } from "./couchdb";
-
-const dbName = "testart"; // Target database
+import { useDatabase } from "./couchdb.js";
+import config from "../core/config/index.js";
+const dbName = config.dbName ||'gallusgarten-poll';//  Target database
 const db = useDatabase(dbName);
 
-const testConnection = async () => {
+export const testConnection = async () => {
   try {
     // Fetch the list of all databases as a connection test
-    const dbList = await db.info();
-    console.log("Connection successful! Database Info:", dbList);
+    // 
+    const dbInfo = await db.info();
+    console.log("Connection successful! Database Info:", dbInfo);
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error connecting to CouchDB:", error.message);
