@@ -25,14 +25,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
-(async () => {
+async () => {
   try {
     await testConnection();
   } catch (error) {
-    console.error("Error during app startup:", error)
-    process.exit(1)
+    console.error('Error during app startup:', error);
+    process.exit(1);
   }
-})
+};
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createError(404));
 });

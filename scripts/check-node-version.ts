@@ -1,6 +1,6 @@
 import semver from 'semver';
 
-const requiredVersion: string = '22.13.1'; // please update .nvmrc file too
+const requiredVersion: string = '22.14.0'; // please update .nvmrc file too
 const currentVersion: string = process.versions.node;
 
 if (!semver.satisfies(currentVersion, requiredVersion)) {

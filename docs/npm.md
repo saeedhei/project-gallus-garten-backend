@@ -21,8 +21,8 @@ nvm-setup.exe
 nvm version
 nvm list available
 nvm install 16.20.0
-nvm install 22.13.1
-nvm use 22.13.1
+nvm install 22.14.0
+nvm use 22.14.0
 node -v
 echo 22.13.1 > .nvmrc
 nvm use 22.11.0
@@ -36,6 +36,8 @@ npm update
 git add .
 git commit -m "Categories Filter Fixed"
 git push origin main
+
+git pull origin main
 
 
 
