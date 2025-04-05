@@ -1,6 +1,6 @@
 import express, { Request, Response, RequestHandler } from 'express';
 // import { useDatabase } from '../db/couchdb.js';
-import getDB from '../utils/getDB.js';
+import { getDB } from '../core/config/couchdb.js';
 const router = express.Router();
 
 
