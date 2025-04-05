@@ -1,5 +1,9 @@
 import { promises as fsPromises } from 'fs';
+import { fileURLToPath } from 'url';
 import * as path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const srcDir = path.resolve(__dirname, '../src/views');
 const destDir = path.resolve(__dirname, '../dist/views');

@@ -34,7 +34,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "Categories Filter Fixed"
+git commit -m "npm run dev fixed"
 git push origin main
 
 git pull origin main
