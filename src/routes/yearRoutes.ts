@@ -1,8 +1,9 @@
 import express, { Request, Response, Router } from 'express';
-import { useDatabase } from '../db/couchdb.js';
+import getDB from '../utils/getDB.js';
+// import { useDatabase } from '../db/couchdb.js';
 
 const router: Router = express.Router();
-const db = useDatabase(process.env.DB_NAME || 'default_database_name');
+// const db = useDatabase(process.env.DB_NAME || 'default_database_name');
 
 // Define expected request parameter and body types
 interface Params {
@@ -26,6 +27,7 @@ router.put(
     }
 
     try {
+      const db = await getDB();
       // Find the document by its publicId
       const response = await db.find({
         selector: { publicId },

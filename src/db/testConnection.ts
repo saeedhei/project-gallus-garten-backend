@@ -1,10 +1,12 @@
-import { useDatabase } from "./couchdb.js";
-import config from "../core/config/index.js";
-const dbName = config.dbName ||'gallusgarten-poll';//  Target database
-const db = useDatabase(dbName);
+// import { useDatabase } from "./couchdb.js";
+import getDB from "../utils/getDB.js";
+// import config from "../core/config/index.js";
+// const dbName = config.dbName ||'gallusgarten-poll';//  Target database
+// const db = useDatabase(dbName);
 
 export const testConnection = async () => {
   try {
+    const db = await getDB();
     // Fetch the list of all databases as a connection test
     // 
     const dbInfo = await db.info();

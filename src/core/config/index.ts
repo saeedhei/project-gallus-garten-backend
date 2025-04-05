@@ -13,13 +13,14 @@ const envPath = path.resolve(__dirname, '../../../', envFile);
 console.log(`Loading environment variables from: ${envPath}`);
 dotenv.config({ path: envPath });
 
-type Environment = 'development' | 'production';
+type Environment = 'development' | 'production' | 'test';
 const env = (process.env.NODE_ENV || 'development') as Environment;
 
 // Dynamic import
 const configurations = {
   development: async () => (await import('./development.js')).default,
   production: async () => (await import('./production.js')).default,
+  test: async () => (await import('./test.js')).default,
 };
 
 // const config = await configurations[env]();

@@ -1,12 +1,15 @@
+import { fileURLToPath } from 'url';
+import path from 'path';
 import { promises as fsPromises } from 'fs';
-import * as path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const srcDir = path.resolve(__dirname, '../src/views');
 const destDir = path.resolve(__dirname, '../dist/views');
 
 const srcPublic = path.resolve(__dirname, '../src/public');
 const destPublic = path.resolve(__dirname, '../dist/public');
-
 /**
  * Recursively copies a directory from the source to the destination.
  * @param src - The source directory.

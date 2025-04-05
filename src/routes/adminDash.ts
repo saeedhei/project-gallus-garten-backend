@@ -1,15 +1,17 @@
 import express, { Request, Response, RequestHandler } from 'express';
-import { useDatabase } from '../db/couchdb.js';
-
+// import { useDatabase } from '../db/couchdb.js';
+import getDB from '../utils/getDB.js';
 const router = express.Router();
-const db = useDatabase(process.env.DB_NAME || 'default_database_name');
+
 
 // Get all images or search by publicId
 router.get('/', (async (req: Request, res: Response) => {
     const { search = '' } = req.query;
 
-    try {
+  try {
+      const db = await getDB();
       if (search) {
+        
         const response = await db.find({
           selector: { publicId: search },
         });
@@ -44,6 +46,7 @@ router.put(
     }
 
     try {
+      const db = await getDB();
       // Find the document by its publicId
       const response = await db.find({
         selector: { publicId },
@@ -78,7 +81,8 @@ router.post('/upload', (async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Invalid image data. 'publicId' is required." });
     }
 
-    try {
+  try {
+      const db = await getDB();
       // Check if an image with the same publicId already exists
       const response = await db.find({
         selector: { publicId: newImage.publicId },
@@ -104,7 +108,8 @@ router.post('/upload', (async (req: Request, res: Response) => {
 router.put('/imageStatus/:publicId', (async (req: Request<{ publicId: string; }>, res: Response) => {
     const { publicId } = req.params;
 
-    try {
+  try {
+      const db = await getDB();
       // Find the document by its publicId
       const response = await db.find({
         selector: { publicId },
