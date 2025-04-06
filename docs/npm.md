@@ -34,7 +34,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "npm run dev fixed"
+git commit -m "env updated"
 git push origin main
 
 git pull origin main
@@ -54,3 +54,9 @@ npm install --omit=dev
 # If you don’t need your local changes, reset the file:
 git checkout -- src/routes/gallery.ts
 git pull origin main
+
+
+git rm --cached .env.test
+git commit -m "Stop tracking .env.test"
+Check for Overrides
+!.env.test
