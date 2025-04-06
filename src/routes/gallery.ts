@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-// import { useDatabase } from '../db/couchdb.js';
-import { getDB } from '../core/config/couchdb.js';
+ import { useDatabase } from '../core/config/couchdb.js'; 
+
 const router = express.Router();
 // const db = useDatabase(process.env.DB_NAME || 'default_database_name');
 
@@ -10,7 +10,7 @@ router.get('/', async (req: Request, res: Response) => {
   const imagesPerPage = 15;
 
   try {
-    const db = await getDB();
+    const db = await useDatabase();
     // Base selector: Fetch only public images
     const selector: any = { isPublic: true };
 

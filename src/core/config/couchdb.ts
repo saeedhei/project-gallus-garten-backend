@@ -13,28 +13,15 @@ const couch = nano({
 });
 
 /**
- * Initializes or creates a database if it doesn't exist.
+ * Initializes a database.
  */
-const useDatabase = async (dbName: string) => {
+const useDatabase = async (dbName = process.env.DB_NAME || 'gallusgarten-poll') => {
   try {
-    // Check if the database exists
-    // const dbList = await couch.db.list();
-    // if (!dbList.includes(dbName)) {
-    //   await couch.db.create(dbName);
-    //   console.log(`Database "${dbName}" created.`);
-    // }
-
-    // Return the database instance
-    return couch.use(dbName);
+    return await couch.use(dbName);
   } catch (error) {
     console.error(`Failed to use database "${dbName}":`, error);
     throw error;
   }
 };
 
-const getDB = async () => {
-  const dbName = process.env.DB_NAME || 'gallusgarten-poll';
-  return await useDatabase(dbName);
-};
-
-export { useDatabase, getDB };
+export { useDatabase };

@@ -1,6 +1,5 @@
 import express, { Request, Response, RequestHandler } from 'express';
-// import { useDatabase } from '../db/couchdb.js';
-import { getDB } from '../core/config/couchdb.js';
+import { useDatabase } from '../core/config/couchdb.js';
 const router = express.Router();
 
 
@@ -9,7 +8,7 @@ router.get('/', (async (req: Request, res: Response) => {
     const { search = '' } = req.query;
 
   try {
-      const db = await getDB();
+      const db = await useDatabase();
       if (search) {
         
         const response = await db.find({
@@ -46,7 +45,7 @@ router.put(
     }
 
     try {
-      const db = await getDB();
+      const db = await useDatabase();
       // Find the document by its publicId
       const response = await db.find({
         selector: { publicId },
@@ -82,7 +81,7 @@ router.post('/upload', (async (req: Request, res: Response) => {
     }
 
   try {
-      const db = await getDB();
+      const db = await useDatabase();
       // Check if an image with the same publicId already exists
       const response = await db.find({
         selector: { publicId: newImage.publicId },
@@ -109,7 +108,7 @@ router.put('/imageStatus/:publicId', (async (req: Request<{ publicId: string; }>
     const { publicId } = req.params;
 
   try {
-      const db = await getDB();
+      const db = await useDatabase();
       // Find the document by its publicId
       const response = await db.find({
         selector: { publicId },

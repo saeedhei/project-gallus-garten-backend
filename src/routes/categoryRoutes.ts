@@ -1,6 +1,5 @@
 import express, { Request, Response, Router } from 'express';
-// import { useDatabase } from '../db/couchdb.js';
-import { getDB } from '../core/config/couchdb.js';
+import { useDatabase } from '../core/config/couchdb.js';
 import axios from 'axios';
 
 const router: Router = express.Router();
@@ -120,7 +119,7 @@ router.put(
     }
 
     try {
-      const db = await getDB();
+      const db = await useDatabase();
       // Find the document by its publicId
       const response = await db.find({
         selector: { publicId },
