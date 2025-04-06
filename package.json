@@ -28,9 +28,11 @@
     "nano": "^10.1.4",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pug": "3.0.3"
+    "pug": "3.0.3",
+    "bcrypt": "^5.1.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/debug": "^4.1.12",
@@ -44,6 +46,7 @@
     "@types/semver": "^7.5.8",
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
+    
     "cross-env": "^7.0.3",
     "eslint": "^9.19.0",
     "nodemon": "^3.1.9",
