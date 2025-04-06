@@ -5,6 +5,7 @@ import adminDash from './adminDash.js';
 import adminLogin from './adminLogin.js';
 import yearRoutes from './yearRoutes.js';
 import categoryRoutes from './categoryRoutes.js';
+import userRouter from './userRoutes.js'
 const router = express.Router();
 
 /* GET home page. */
@@ -17,5 +18,6 @@ router.use('/api/images', galleryRouter);
 router.use('/api/images/filter', galleryCategories);
 router.use('/api/adminPanelDash', adminDash);
 router.use('/api/login', adminLogin);
+router.use('/api/user', userRouter)
 
 export default router;
