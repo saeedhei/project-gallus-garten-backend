@@ -5,9 +5,8 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { fileURLToPath } from 'url';
-
 import indexRouter from './routes/index.js';
-import { testConnection } from './db/testConnection.js';
+ import { testConnection } from './core/config/testConnection.js';
 const app: express.Application = express();
 
 const __filename = fileURLToPath(import.meta.url);

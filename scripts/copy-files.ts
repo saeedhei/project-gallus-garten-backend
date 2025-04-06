@@ -10,7 +10,6 @@ const destDir = path.resolve(__dirname, '../dist/views');
 
 const srcPublic = path.resolve(__dirname, '../src/public');
 const destPublic = path.resolve(__dirname, '../dist/public');
-
 /**
  * Recursively copies a directory from the source to the destination.
  * @param src - The source directory.

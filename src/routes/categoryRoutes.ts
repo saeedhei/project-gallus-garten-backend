@@ -1,9 +1,9 @@
 import express, { Request, Response, Router } from 'express';
-import { useDatabase } from '../db/couchdb.js';
+import { useDatabase } from '../core/config/couchdb.js';
 import axios from 'axios';
 
 const router: Router = express.Router();
-const db = useDatabase(process.env.DB_NAME || 'default_database_name');
+// const db = useDatabase(process.env.DB_NAME || 'default_database_name');
 
 const { DB_USER, DB_PASS } = process.env;
 const auth = Buffer.from(`${DB_USER}:${DB_PASS}`).toString('base64'); // Fixed template literal
@@ -29,6 +29,7 @@ interface RequestBody {
 // Fetch all unique categories from CouchDB
 router.get('/categories', async (req: Request, res: Response): Promise<void> => {
   try {
+     
     const url =
       'https://couchdb.seointro.de/gallusgarten/_design/categories/_list/format_categories/unique_categories?group=true';
 
@@ -118,6 +119,7 @@ router.put(
     }
 
     try {
+      const db = await useDatabase();
       // Find the document by its publicId
       const response = await db.find({
         selector: { publicId },
