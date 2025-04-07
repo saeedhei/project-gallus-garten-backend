@@ -34,7 +34,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "env updated"
+git commit -m "db updated"
 git push origin main
 
 git pull origin main
