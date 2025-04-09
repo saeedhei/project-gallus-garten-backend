@@ -1,219 +1,101 @@
+# User Management Code Documentation
 
-# User Management API Documentation
+This file contains logic for managing users in a CouchDB database. It includes functions to create, update, delete, and retrieve users, as well as handle validation checks like field uniqueness. The code interacts with a User model, schema validation (userSchema), and utility functions for password hashing and ID generation.
 
-## Overview
-This API provides endpoints for managing user-related operations such as creating, updating, deleting, and retrieving user data from a CouchDB database.
+## Imports
 
-### Features:
-- Create a new user
-- Find user by ID
-- Update user details
-- Delete user
-- Get all users
+- useDatabase: Function to initialize and interact with the CouchDB database.
+- User: The User model, defining the structure and types for a user document.
+- hashPassword: A utility function to hash passwords before storing them in the database.
+- generateId: A utility function to generate unique user IDs.
+- userSchema: A Joi schema used to validate user data before saving or updating in the database.
 
-## Database Operations
+## Functions
 
 ### checkFieldUniqueness(field: string, value: string, excludeId: string): Promise<boolean>
-This function checks if a given field (e.g., name, email) is unique in the database, excluding the current user if an excludeId is provided.
 
-#### Parameters:
-- field (string): The field to check for uniqueness (e.g., name, email).
-- value (string): The value to check against the database.
-- excludeId (string): The ID of the user to exclude from the uniqueness check.
-
-#### Returns:
-- Promise<boolean>: Resolves to true if the field value already exists, false otherwise.
-
-### findUserByIdFromDb(id: string): Promise<User | null>
-Find a user in the database by their ID.
-
-#### Parameters:
-- id (string): The unique identifier of the user.
-
-#### Returns:
-- Promise<User | null>: The user object if found, otherwise null.
-
-### createUser(name: string, email: string, password: string, fullName: string, role: string): Promise<Pick<User, '_id' | 'name' | 'fullName' | 'role' | 'createdAt' | 'updatedAt'>>
-Creates a new user in the database.
-
-#### Parameters:
-- name (string): The username of the user.
-- email (string): The email address of the user.
-- password (string): The password for the user.
-- fullName (string): The full name of the user.
-- role (string): The role of the user. Default is 'user'.
-
-#### Returns:
-- Promise<Pick<User, '_id' | 'name' | 'fullName' | 'role' | 'createdAt' | 'updatedAt'>>: The created user object with essential fields.
-
-### updateUserDetails(id: string, updateData: { name?: string, email?: string, fullName?: string, password: string }): Promise<User | null>
-Updates an existing user's details in the database.
-
-#### Parameters:
-- id (string): The ID of the user to update.
-- updateData (object): The data to update. At least one field must be provided, and password, if included, must be at least 8 characters long.
-
-#### Returns:
-- Promise<User | null>: The updated user object, or null if the user is not found.
-
-### deleteUser(id: string): Promise<User | null>
-Deletes a user from the database by their ID.
-
-#### Parameters:
-- id (string): The ID of the user to delete.
-
-#### Returns:
-- Promise<User | null>: The deleted user object, or null if the user is not found.
-
-### getAllUsers(): Promise<User[]>
-Fetches all users from the database.
-
-#### Returns:
-- Promise<User[]>: An array of all users in the database.
+- Purpose: Checks if a field (e.g., name, email) has a unique value in the database, excluding a particular user ID to allow updates to the current user.
+- Parameters:
+  - field: The field to check for uniqueness (e.g., name, email).
+  - value: The value to check for uniqueness.
+  - excludeId: The user ID to exclude from the uniqueness check (usually the ID of the current user being updated).
+- Returns: A boolean indicating whether the field value is unique or not.
 
 ---
 
-## API Endpoints
+### findUserByIdFromDb(id: string): Promise<User | null>
 
-### POST /create
-Creates a new user.
+- Purpose: Finds a user by their _id in the CouchDB database.
+- Parameters:
+  - id: The user's _id to search for.
+- Returns: The User object if found, or null if the user does not exist.
 
-#### Request Body:
-```json
-{
-  "name": "string",
-  "email": "string",
-  "password": "string",
-  "fullName": "string",
-  "role": "string"
-}
-```
+---
 
-#### Response:
-- 201 Created: Returns the created user object.
-- 500 Internal Server Error: If user creation fails.
+### findUserByLogin(login: string): Promise<User | null>
 
-### GET /:id
-Finds a user by their ID.
+- Purpose: Finds a user by their login (either email or username).
+- Parameters:
+  - login: The email or username used to log in.
+- Returns: The User object if found, or null if the user does not exist.
+- Logic: Determines if the login is an email or username and searches accordingly.
 
-#### Parameters:
-- id (string): The unique identifier of the user.
+---
 
-#### Response:
-- 200 OK: Returns the user object if found.
-- 404 Not Found: If the user is not found.
+### createUser(name: string, email: string, password: string, fullName: string, role: User['role'] = 'user'): Promise<Pick<User, '_id' | 'name' | 'fullName' | 'role' | 'createdAt' | 'updatedAt'>>
 
-### PUT /update/:id
-Updates a user's details by their ID.
+- Purpose: Creates a new user in the database.
+- Parameters:
+  - name: The username of the user.
+  - email: The user's email address.
+  - password: The user's password (will be hashed).
+  - fullName: The user's full name.
+  - role: The user's role (defaults to user).
+- Returns: A summary object with essential user fields (_id, name, fullName, role, createdAt, updatedAt).
+- Logic:
+  - Checks if the username or email already exists.
+  - Ensures the password is at least 8 characters long.
+  - Hashes the password.
+  - Validates the user data against the userSchema.
+  - Inserts the user into the database.
 
-#### Parameters:
-- id (string): The ID of the user to update.
+---
 
-#### Request Body:
-```json
-{
-  "name": "string",
-  "email": "string",
-  "fullName": "string",
-  "password": "string"
-}
-```
+### findUserById(id: string): Promise<User | null>
 
-#### Response:
-- 200 OK: Returns the updated user object.
-- 500 Internal Server Error: If the update fails.
+- Purpose: Finds a user by their ID, ensuring that the required fields are present.
+- Parameters:
+  - id: The user's _id to search for.
+- Returns: The User object if found, or null if not found or missing required fields.
 
-### DELETE /:id
-Deletes a user by their ID.
+---
 
-#### Parameters:
-- id (string): The ID of the user to delete.
+### updateUserDetails(id: string, updateData: { name?: string; email?: string; fullName?: string; password: string }): Promise<User | null>
 
-#### Response:
-- 200 OK: Returns a message indicating the user was deleted.
-- 404 Not Found: If the user is not found.
+- Purpose: Updates the details of an existing user.
+- Parameters:
+  - id: The user's _id.
+  - updateData: The data to update (can include name, email, fullName, or password).
+- Returns: The updated User object.
+- Logic:
+  - Validates the new name, email, or fullName for uniqueness.
+  - Ensures the password, if provided, is at least 8 characters long and hashes it.
+  - Validates the updated data against the userSchema.
 
-### GET /getall
-Fetches all users.
+---
 
-#### Response:
-- 200 OK: Returns an array of all users.
-- 500 Internal Server Error: If fetching users fails.
+### deleteUser(id: string): Promise<User | null>
+- Purpose: Deletes a user by their ID from the database.
+- Parameters:
+  - id: The user's _id to delete.
+- Returns: The deleted User object, or null if the user does not exist.
+- Logic:
+  - Verifies the _id and _rev are present.
+  - Deletes the user from the database using db.destroy().
 
-## Example Code for Controller Functions
+---
 
-### createUserController(req: Request, res: Response)
-Handles the user creation process.
+### getAllUsers(): Promise<User[]>
 
-#### Example:
-```typescript
-export const createUserController = async (req: Request, res: Response) => {
-  const { name, email, password, fullName, role } = req.body;
-  try {
-    const user = await createUser(name, email, password, fullName, role);
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to create user' });
-  }
-};
-```
-
-### findUserByIdController(req: Request, res: Response)
-Fetches a user by their ID.
-
-#### Example:
-```typescript
-export const findUserByIdController = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  try {
-    const user = await findUserById(id);
-    if (!user) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch user' });
-  }
-};
-```
-
-### updateUserDetailsController(req: Request, res: Response)
-Updates user details.
-
-#### Example:
-```typescript
-export const updateUserDetailsController = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { name, email, fullName, password } = req.body;
-  try {
-    const updatedUser = await updateUserDetails(id, { name, email, fullName, password });
-    res.status(200).json({ message: 'User details updated successfully', updatedUser });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to update user' });
-  }
-};
-```
-
-### deleteUserController(req: Request, res: Response)
-Deletes a user by ID.
-
-#### Example:
-```typescript
-export const deleteUserController = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  try {
-    const deletedUser = await deleteUser(id);
-    if (!deletedUser) {
-      res.status(404).json({ message: `User with id ${id} not found` });
-      return;
-    }
-    res.status(200).json({ message: 'User deleted', deletedUser });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to delete user' });
-  }
-};
-```
-
-## Conclusion
-This API allows for efficient management of user data, including user creation, modification, and deletion, all backed by a CouchDB database. The validation and error handling ensure robustness while managing user accounts.
+- Purpose: Retrieves all users from the database.
+- Returns: An array of User objects.
