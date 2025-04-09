@@ -54,8 +54,10 @@ export const findUserByEmailFromDb = async (email: string): Promise<User | null>
         limit: 1,
       });
     if (!userDoc) {
+      // console.log('user not faund')
       return null;
     }
+    // console.log(userDoc)
     return userDoc.docs[0] as User
   } catch (error) {
     console.error('Error finding user by email:', error);

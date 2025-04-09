@@ -24,7 +24,7 @@ export const loginController = async (req: Request, res: Response): Promise<void
       name: user.name,
       role: user.role,
     });
-
+ 
     res.json({ token });
   } catch (error) {
     console.error('Login error:', error);
