@@ -1,13 +1,19 @@
 import { Request, Response } from 'express';
-import { findUserByEmailFromDb } from '../services/userServise.js';
-import { comparePassword } from '../utils/hash.js'; 
+import { findUserByLogin } from '../services/userServise.js';
+import { comparePassword } from '../utils/hash.js';
 import { generateToken } from '../utils/jwt.js';
 
 export const loginController = async (req: Request, res: Response): Promise<void> => {
-  const { email, password } = req.body;
+  const { login, password } = req.body;
+
+  if (!login || !password) {
+    res.status(400).json({ error: 'Login and password are required' });
+    return;
+  }
 
   try {
-    const user = await findUserByEmailFromDb(email);
+    const user = await findUserByLogin(login);
+
     if (!user) {
       res.status(401).json({ error: 'Invalid credentials' });
       return;
@@ -24,7 +30,7 @@ export const loginController = async (req: Request, res: Response): Promise<void
       name: user.name,
       role: user.role,
     });
- 
+
     res.json({ token });
   } catch (error) {
     console.error('Login error:', error);
