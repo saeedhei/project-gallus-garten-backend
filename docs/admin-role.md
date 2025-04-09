@@ -1,99 +1,89 @@
-# `checkAdminRole` Middleware
+Here is the .md file documentation in English without the implementation:
 
-Middleware to check if the user making the request has the `administrator` role.
+# Middleware: Role and User Authorization
 
----
+## checkAdminRole
 
-## Endpoint: `POST /api/user/create`
+Checks if the user making the request has an "administrator" role and only allows the action if the user's role is administrator.
 
-Creates a new user. **Only accessible to administrators**.
+### Description
 
----
+- If the user's role is not administrator, a 403 Forbidden error is returned.
+- If the user's role is administrator, the request is passed to the next middleware with next().
 
-### Required Headers
+### Usage
 
-| Header        | Description                                 |
-|---------------|---------------------------------------------|
-| `x-user-id`   | The `_id` of the administrator (authenticated user) |
+`ts
+import { checkAdminRole } from '../middleware/checkAdminRole';
 
----
+router.post('/create',authenticateJWT,checkAdminRole, createUserController);
 
-### Request Example
+Example Error (if user is not an administrator)
 
-**URL:**
-
-```
-POST http://localhost:3333/api/user/create
-```
-
-**Headers:**
-
-```http
-Content-Type: application/json
-x-user-id: 649b8e0d123456abcdef1234
-```
-
-**Body:**
-
-```json
-{
-  "name": "newuser1",
-  "email": "newuser1@example.com",
-  "password": "verysecurepass",
-  "fullName": "New User One",
-  "role": "user"
-}
-```
-
----
-
-### Possible Responses
-
-| Status | Description                                   |
-|--------|-----------------------------------------------|
-| `201`  | User successfully created                     |
-| `401`  | Missing `x-user-id` header                    |
-| `403`  | User does not have administrator rights       |
-| `500`  | Error while creating the user                 |
-
----
-
-### Response Examples
-
-**Success:**
-
-```json
-{
-  "_id": "65a1bcaef3d2e9a788123456",
-  "name": "newuser1",
-  "fullName": "New User One",
-  "role": "user",
-  "createdAt": "2025-04-06T12:34:56.789Z",
-  "updatedAt": "2025-04-06T12:34:56.789Z"
-}
-```
-
-**Unauthorized (missing x-user-id):**
-
-```json
-{
-  "error": "Unauthorized: Missing user ID"
-}
-```
-
-**Forbidden (not an admin):**
-
-```json
 {
   "error": "Forbidden: Only administrators can perform this action"
 }
-```
+
 
 ---
 
-### Verification
+checkSelfOrAdmin
 
-1. Create a user with the role `administrator`.
-2. Get the user's `_id`.
-3. Use the user's `_id` as the value for the `x-user-id` header in Postman.
-4. Make sure that a non-administrator user receives the `403 Forbidden` error.
+Checks if the user can perform the action:
+
+If the user is an administrator, they are allowed to perform any action.
+
+If the user is trying to update their own profile, the request is allowed.
+
+If the user tries to update another user's profile, a 403 Forbidden error is returned.
+
+
+Description
+
+If the user's role is administrator or if the user is trying to update their own profile, the request is passed to the next middleware with next().
+
+If the user is not an administrator and is trying to update another user's profile, a 403 Forbidden error is returned.
+
+
+Usage
+
+import { checkSelfOrAdmin } from '../middleware/checkAdminRole';
+
+router.put('/update/:id', authenticateJWT,checkSelfOrAdmin, updateUserDetailsController);
+
+Example Error (if user cannot update another user's account)
+
+{
+  "message": "You can update only your own account"
+}
+
+
+---
+
+Possible Errors
+
+
+---
+
+Verification
+
+1. For checkAdminRole:
+
+Test with a user with the administrator role.
+
+Test with a user who is not an administrator and verify they receive a 403 Forbidden response.
+
+
+
+2. For checkSelfOrAdmin:
+
+Test with an administrator user to check they can update any profile.
+
+Test with a user updating their own profile to ensure it works.
+
+Test with a user trying to update another user's profile and verify they receive a 403 Forbidden response.
+
+
+
+
+This `.md` file provides the necessary documentation in English, including the usage of the middleware functions and possible responses, without the implementation code.

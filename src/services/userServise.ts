@@ -4,7 +4,7 @@ import { hashPassword } from '../utils/hash.js';
 import { generateId } from '../utils/uuid.js';
 import { userSchema } from '../schemas/userSchema.js';
 
-const db = await useDatabase();
+const db = useDatabase();
 
 // logic for checking uniqueness
 const checkFieldUniqueness = async (
@@ -40,8 +40,32 @@ export const findUserByIdFromDb = async (id: string): Promise<User | null> => {
 
   return result.docs[0] as User;
 };
+// logic for searching user by email || name
 
+export const findUserByLogin = async (login: string): Promise<User | null> => {
+  try {
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(login);
 
+    const selectorField = isEmail ? 'email' : 'name';
+
+    const userDoc = await db.find({
+      selector: {
+        type: 'user',
+        [selectorField]: { $eq: login },
+      },
+      limit: 1,
+    });
+
+    if (!userDoc || userDoc.docs.length === 0) {
+      return null;
+    }
+
+    return userDoc.docs[0] as User;
+  } catch (error) {
+    console.error('Error finding user by login:', error);
+    return null;
+  }
+};
 export const createUser = async (
   name: string,
   email: string,
