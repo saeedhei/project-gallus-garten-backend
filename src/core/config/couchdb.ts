@@ -9,13 +9,7 @@ const couch = nano({
   requestDefaults: { headers: { Authorization: `Basic ${encodedCredentials}` } },
 });
 
-const useDatabase = async (dbName: string = process.env.DB_NAME as string) => {
-  try {
-    return couch.use(dbName);
-  } catch (error) {
-    console.error(`Failed to use database "${dbName}":`, error);
-    throw error;
-  }
+const useDatabase = (dbName: string = process.env.DB_NAME as string) => {
+  return couch.use(dbName);
 };
-
 export { useDatabase };

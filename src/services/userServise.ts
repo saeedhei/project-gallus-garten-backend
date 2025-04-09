@@ -4,7 +4,7 @@ import { hashPassword } from '../utils/hash.js';
 import { generateId } from '../utils/uuid.js';
 import { userSchema } from '../schemas/userSchema.js';
 
-const db = await useDatabase();
+const db = useDatabase();
 
 // logic for checking uniqueness
 const checkFieldUniqueness = async (
