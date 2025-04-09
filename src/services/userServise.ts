@@ -40,7 +40,28 @@ export const findUserByIdFromDb = async (id: string): Promise<User | null> => {
 
   return result.docs[0] as User;
 };
-
+// logic for searching user by email
+export const findUserByEmailFromDb = async (email: string): Promise<User | null> => {
+  try {
+    if (!email) {
+       throw new Error('Email is required');
+    }
+      const userDoc = await db.find({
+        selector: {
+          type: 'user',
+          email: { $eq: email },
+        },
+        limit: 1,
+      });
+    if (!userDoc) {
+      return null;
+    }
+    return userDoc.docs[0] as User
+  } catch (error) {
+    console.error('Error finding user by email:', error);
+    return null;
+  }
+}
 
 export const createUser = async (
   name: string,
