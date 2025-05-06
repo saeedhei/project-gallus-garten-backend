@@ -8,7 +8,7 @@ import categoryRoutes from './categoryRoutes.js';
 
 import userRouter from './userRoutes.js';
 import loginRouter from './authRouter.js'
-
+import passwordRouter from './passwordRoutes.js'
 const router = express.Router();
 
 /* GET home page. */
@@ -22,7 +22,8 @@ router.use('/api/images/filter', galleryCategories);
 router.use('/api/adminPanelDash', adminDash);
 router.use('/api/login', adminLogin);
 
-router.use('/api/user', userRouter);
-router.use('/api/user',loginRouter);
+router.use('/', userRouter);
+router.use('/v1/user', loginRouter);
+router.use('/v1',passwordRouter);
 
 export default router;

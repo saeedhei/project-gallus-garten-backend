@@ -9,6 +9,9 @@ const requiredEnvKeys = [
   'DB_NAME',
   'GALLUS_ADMIN_USER',
   'GALLUS_ADMIN_PASSWORD',
+  'JWT_SECRET',
+  'SMTP_HOST',
+  'SMTP_PORT',
 ];
 
 const missingKeys = requiredEnvKeys.filter((key) => !process.env[key]);

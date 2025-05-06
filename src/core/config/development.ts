@@ -1,4 +1,5 @@
-export default {
+import { AppConfig } from './types.js';
+const config: AppConfig = {
   port: process.env.PORT || 3000,
   dbHost: process.env.DB_HOST,
   dbPort: process.env.DB_PORT,
@@ -9,3 +10,4 @@ export default {
   gallusAdminPassword: process.env.GALLUS_ADMIN_PASSWORD,
   jwtSecret: process.env.JWT_SECRET,
 };
+export default config;
