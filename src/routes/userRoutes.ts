@@ -9,12 +9,12 @@ import {
 import { checkAdminRole, checkSelfOrAdmin } from '../middlewares/checkAdminRole.js';
 import { authenticateJWT } from '../middlewares/authMiddleware.js';
 const router = Router();
-router.get('/getall', authenticateJWT, getAllUsersController);
+router.get('/v1/getall', authenticateJWT, getAllUsersController);
 
-router.post('/create',authenticateJWT,checkAdminRole, createUserController);
-router.put('/update/:id', authenticateJWT,checkSelfOrAdmin, updateUserDetailsController);
-router.get('/:id', authenticateJWT, findUserByIdController);
+router.post('/v2/create',authenticateJWT,checkAdminRole, createUserController);
+router.put('/v1/update/:id', authenticateJWT,checkSelfOrAdmin, updateUserDetailsController);
+router.get('/v1/:id', authenticateJWT, findUserByIdController);
 
-router.delete('/:id', authenticateJWT, deleteUserController);
+router.delete('/v1/:id', authenticateJWT, deleteUserController);
 
 export default router;

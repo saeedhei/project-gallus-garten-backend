@@ -22,7 +22,7 @@ router.use('/api/images/filter', galleryCategories);
 router.use('/api/adminPanelDash', adminDash);
 router.use('/api/login', adminLogin);
 
-router.use('/api/user', userRouter);
-router.use('/api/user',loginRouter);
+router.use('/', userRouter);
+router.use('/v1/user',loginRouter);
 
 export default router;
