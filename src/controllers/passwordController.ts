@@ -1,32 +1,32 @@
-import { useDatabase } from '../core/config/couchdb.js';
-import { sendEmail } from '../core/config/mailer/mailet.js';
-import { findUserByLogin } from '../services/userServise.js';
-import { hashPassword } from '../utils/hash.js';
-import { userSchema } from '../schemas/userSchema.js';
-import { User } from '../models/User.js';
-import { generateToken, verifyToken } from '../utils/jwt.js';
+import { Request, Response } from 'express';
+import { requestPasswordReset, resetPassword } from '../services/passwordServise.js';
 
-const db = useDatabase();
+export const handleRequestReset = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      res.status(400).json({ error: 'Login or email is required' });
+      return
+    }
 
-export const requestPasswordReset = async (email: string): Promise<void> => {
-  const result = await db.find({
-    selector: {
-      type: 'user',
-      email: email,
-    },
-    limit: 1,
-  });
-  const user = result.docs[0] as User;
-  if (!user) {
-    throw new Error('User with this email not foud');
+    await requestPasswordReset(email);
+    res.json({ message: 'Password reset link sent to email' });
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
   }
-  const token = generateToken({ id: user._id as string, name: user.name, role: user.role }, '5m');
-  const resetLink = `http://localhost:3000/reset-password?token=${token}`;
-  const message = `To reset your password, click the link: ${resetLink}`;
-  await sendEmail({
-    to: user.email,
-    subject: 'Password Reset Request',
-    text: message,
-  });
 };
 
+export const handleResetPassword = async (req: Request, res: Response):Promise<void> => {
+  try {
+    const { token, newPassword } = req.body;
+    if (!token || !newPassword) {
+      res.status(400).json({ error: 'Token and new password are required' });
+      return
+    }
+
+    await resetPassword(token, newPassword);
+    res.json({ message: 'Password has been reset successfully' });
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+};
