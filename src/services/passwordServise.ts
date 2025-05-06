@@ -25,15 +25,13 @@ export const requestPasswordReset = async (email: string): Promise<void> => {
      );
      const resetLink = `${linkFE}?token=${token}`;
      const message = `To reset your password, click the link: ${resetLink}`;
-     if (process.env.NODE_ENV === 'development') {
+    
        await sendEmail({
          to: user.email,
          subject: 'Password Reset Request',
          text: message,
        });
-     } else {
-       console.log('[INFO] Skipping email sending - NODE_ENV is not development');
-     }
+     
 
 
   } catch (error) {
