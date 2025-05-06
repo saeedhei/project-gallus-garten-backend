@@ -9,5 +9,10 @@ const config: AppConfig = {
   gallusAdminUser: process.env.GALLUS_ADMIN_USER,
   gallusAdminPassword: process.env.GALLUS_ADMIN_PASSWORD,
   jwtSecret: process.env.JWT_SECRET,
+  smtpHost: process.env.SMTP_HOST,
+  smtpPort: process.env.SMTP_PORT,
+  smtpUser: process.env.SMTP_USER,
+  smtpPass: process.env.SMTP_PASS,
+  smtpSecure: process.env.SMTP_SECURE === 'true',
 };
 export default config;

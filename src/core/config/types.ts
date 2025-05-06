@@ -10,4 +10,7 @@ export type AppConfig = {
   jwtSecret?: string;
   smtpHost?: string;
   smtpPort?: string | number;
+  smtpUser?: string;
+  smtpPass?: string;
+  smtpSecure?: boolean;
 };

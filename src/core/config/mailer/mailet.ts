@@ -4,15 +4,23 @@ export interface IEmailOptions{
   subject: string
   text:string
 }
+const isProduction:boolean = process.env.NODE_ENV === 'production';
+const from = isProduction
+  ? 'olhalazyniuk@gmail.com' 
+  : 'no-reply@testapp.local'; 
 
-const from = 'no-reply@testapp.com';
 export const sendEmail = async ({ to, subject, text }: IEmailOptions) => {
   const transporter = nodemailer.createTransport({
-    port: 1025,
-    secure: false,
-    tls: {
-      rejectUnauthorized: false,
-    },
+    host: process.env.SMTP_HOST || 'localhost',
+    port: Number(process.env.SMTP_PORT) || 587,
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: isProduction
+      ? {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        }
+      : undefined, 
+    
   });
 
   await transporter.sendMail({
