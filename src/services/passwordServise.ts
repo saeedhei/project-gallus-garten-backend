@@ -62,9 +62,6 @@ export const resetPassword = async (token: string, newPassword: string): Promise
   if (!user) {
     throw new Error('User not found');
   }
-  if (newPassword.length < 8) {
-    throw new Error('Password must be at least 8 characters long');
-  }
   user.passwordHash = await hashPassword(newPassword);
   user.updatedAt = new Date().toISOString();
 
