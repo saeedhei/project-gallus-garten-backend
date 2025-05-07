@@ -7,6 +7,8 @@
     "check-node": "tsx scripts/check-node-version.ts",
     "check-env": "tsx scripts/checkEnv.ts",
     "lint": "eslint . --fix",
+    "encrypt": "cross-env PASSWORD=myPassword ENV=.env.development tsx scripts/env-encryptor.ts encrypt",
+    "decrypt": "cross-env PASSWORD=myPassword ENV=.env.development.enc tsx scripts/env-encryptor.ts decrypt",
     "dev": "npm run check-node && npm run check-env && cross-env NODE_ENV=development nodemon",
     "test": "cross-env NODE_ENV=test nodemon",
     "build": "tsc",
@@ -58,6 +60,7 @@
     "nodemon": "^3.1.9",
     "prettier": "^3.5.3",
     "semver": "^7.7.1",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   }
