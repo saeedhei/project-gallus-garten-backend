@@ -1,4 +1,4 @@
-import { AppConfig } from './types.js';
+import { AppConfig } from '../../types/typesDb.js';
 const config: AppConfig = {
   port: process.env.PORT || 3000,
   dbHost: process.env.DB_HOST,

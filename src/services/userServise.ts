@@ -60,7 +60,7 @@ export const findUserByLogin = async (login: string): Promise<User | null> => {
       return null;
     }
 
-    return userDoc.docs[0] as User;
+    return userDoc.docs[0] as User; 
   } catch (error) {
     console.error('Error finding user by login:', error);
     return null;
@@ -179,7 +179,7 @@ export const updateUserDetails = async (
 
   const { error } = userSchema.validate(updateData, { allowUnknown: true });
   if (error) {
-    throw new Error(` `);
+    throw new Error(`User validation failed: ${error.message}`);;
   }
 
   try {

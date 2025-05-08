@@ -36,6 +36,10 @@ export const updateUserDetailsController = async (req: Request, res: Response): 
 
   try {
     const updatedUser = await updateUserDetails(id, { name, email, fullName, password });
+    if (!updatedUser) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
     res.status(200).json({ message: 'User details updated successfully', updatedUser });
   } catch (error) {
     console.error('Error updating user details:', error);
