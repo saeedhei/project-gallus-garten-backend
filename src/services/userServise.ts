@@ -70,8 +70,7 @@ export const createUser = async (
   name: string,
   email: string,
   password: string,
-  fullName: string,
-  role: User['role'] = 'user',
+  fullName: string
 ): Promise<Pick<User, '_id' | 'name' | 'fullName' | 'role' | 'createdAt' | 'updatedAt'>> => {
   const now = new Date().toISOString();
 
@@ -83,11 +82,6 @@ export const createUser = async (
     throw new Error('Email already registered');
   }
 
-  const allowedRoles: User['role'][] = ['user', 'member', 'admin', 'administrator'];
-  if (!allowedRoles.includes(role)) {
-    throw new Error('Invalid role');
-  }
-
   if (!password) {
     throw new Error('Password is required');
   }
@@ -97,6 +91,8 @@ export const createUser = async (
   }
 
   const passwordHash = await hashPassword(password);
+
+  const role: User['role'] = 'user'; 
 
   const user: User = {
     _id: generateId(),

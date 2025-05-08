@@ -2,13 +2,13 @@ import { Request, Response } from 'express';
 import { createUser, deleteUser, findUserById, getAllUsers, updateUserDetails } from '../services/userServise.js';
 
 export const createUserController = async (req: Request, res: Response): Promise<void> => {
-  const { name, email, password, fullName,role } = req.body;
+  const { name, email, password, fullName } = req.body;
   try {
-    const user = await createUser(name, email, password, fullName,role);
+    const user = await createUser(name, email, password, fullName);
     res.status(201).json(user);
   } catch (error) {
     console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Failed to create user' });
+    res.status(500).json({ error: 'Failed to create user', });
   }
 };
 export const findUserByIdController = async (req: Request, res: Response): Promise<void> => {
