@@ -1,40 +1,56 @@
-# User Registration (Admin Only)
+# User Registration 
 
-## Overview
+## Endpoint
+POST /v1/create
 
-Only users with the role administrator can create new user accounts via a protected API route.
+## Description
+Creates a new user in the system after validating input, checking for uniqueness, and hashing the password.
+
+---
 
 ## Steps
 
-1. Authentication Required  
-   The request must include a valid JWT token. Only authenticated users are allowed.
+### 1. Receive Request
+- A POST request is made to the /v1/create endpoint.
+- The request body must contain name, email, password, and fullName.
 
-2. Admin Role Check  
-   Middleware verifies that the authenticated user has the role administrator.
+### 2. Extract Fields
+- Extract the input fields from the request body.
 
-3. API Endpoint  
-   POST /v2/create
+### 3. Check Username Uniqueness
+- Verify that the provided name is not already taken.
+- If it is, respond with an error: Username already taken.
 
-4. Request Body  
-   Must contain the following fields:
-   - name – unique username  
-   - email – unique user email  
-   - password – minimum 8 characters  
-   - fullName – full name of the user  
-   - role – one of: user, member, admin, administrator
+### 4. Check Email Uniqueness
+- Verify that the provided email is not already registered.
+- If it is, respond with an error: Email already registered.
 
-5. Validation
-   - name and email must be unique  
-   - role must be from the allowed list  
-   - password must be at least 8 characters  
+### 5. Validate Password
+- Ensure that a password is provided.
+- Ensure the password is at least 8 characters long.
+- If invalid, respond with an appropriate error message.
 
-6. User Creation  
-   If all checks pass, the user is created in the database.
+### 6. Hash the Password
+- Securely hash the password before storing it.
 
-7. Response  
-   Returns the newly created user's basic data:  
-   _id, name, fullName, role, createdAt, updatedAt
+### 7. Set User Role
+- Assign the default role: user.
 
-8. Failure Cases
-   - 403 Forbidden if not an administrator  
-   - 400/500 errors for validation or creation issues
+### 8. Create User Object
+- Generate a unique user ID.
+- Create the full user object with timestamps.
+
+### 9. Validate User Schema
+- Validate the user object using a schema.
+- If validation fails, respond with a descriptive error.
+
+### 10. Insert into Database
+- Save the validated user object to the database.
+- If insertion fails, respond with an error: User creation failed.
+
+### 11. Respond with User Data
+- Return a JSON object with public user information:
+  - _id, name, fullName, role, createdAt, and updatedAt.
+- Use HTTP status 201 Created.
+
+---
