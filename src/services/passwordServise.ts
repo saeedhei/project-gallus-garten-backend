@@ -1,75 +1,132 @@
-import { useDatabase } from '../core/config/couchdb.js';
-import { sendEmail } from '../core/config/mailer/mailet.js';
-import { hashPassword } from '../utils/hash.js';
-import { User } from '../models/User.js';
-import { generateToken, verifyToken } from '../utils/jwt.js';
+// import { useDatabase } from '../core/config/couchdb.js';
+// import { EmailService } from './emailService.js';
+// import { hashPassword } from '../utils/hash.js';
+// import { User } from '../models/User.js';
+// import { generateToken, verifyToken } from '../utils/jwt.js';
+// import { UserRepository } from '../infrastructure/reposetories/userRepository.js';
 
-const db = useDatabase();
-const linkFE = 'http://localhost:3000/reset-password';
-export const requestPasswordReset = async (email: string): Promise<void> => {
-  try {
-     const result = await db.find({
-       selector: {
-         type: 'user',
-         email: email,
-       },
-       limit: 1,
-     });
-     const user = result.docs[0] as User;
-     if (!user) {
-       throw new Error('User with this email not foud');
-     }
-     const token = generateToken(
-       { id: user._id as string, name: user.name, role: user.role },
-       '5m',
-     );
-     const resetLink = `${linkFE}?token=${token}`;
-     const message = `To reset your password, click the link: ${resetLink}`;
+// const db = useDatabase();
+// const linkFE = 'http://localhost:3000/reset-password';
+
+// const emailService= new EmailService()
+// export const requestPasswordReset = async (email: string): Promise<void> => {
+//   try {
+//      const result = await db.find({
+//        selector: {
+//          type: 'user',
+//          email: email,
+//        },
+//        limit: 1,
+//      });
+//      const user = result.docs[0] as User;
+//      if (!user) {
+//        throw new Error('User with this email not foud');
+//     }
+//     console.log(user)
+//      const token = generateToken(
+//        { id: user._id as string, name: user.name, role: user.role },
+//        '5m',
+//      );
+//      const resetLink = `${linkFE}?token=${token}`;
+//      const message = `To reset your password, click the link: ${resetLink}`;
     
-       await sendEmail({
-         to: user.email,
-         subject: 'Password Reset Request',
-         text: message,
-       });
+//        await emailService.sendEmail({
+//          to: user.email,
+//          subject: 'Password Reset Request',
+//          text: message,
+//        });
      
 
 
-  } catch (error) {
-    console.error('Error during password reset request:', error);
-    throw new Error('Failed to process password reset request');
+//   } catch (error) {
+//     console.error('Error during password reset request:', error);
+//     throw new Error('Failed to process password reset request');
 
-  }
+//   }
  
-};
+// };
 
-export const resetPassword = async (token: string, newPassword: string): Promise<User | null> => {
-  if (newPassword.length < 8) {
-    throw new Error('Password must be at least 8 characters long');
+// export const resetPassword = async (token: string, newPassword: string): Promise<User | null> => {
+//   if (newPassword.length < 8) {
+//     throw new Error('Password must be at least 8 characters long');
+//   }
+
+//   const payload = verifyToken(token);
+//   const userId = payload.id;
+
+//   const result = await db.find({
+//     selector: {
+//       type: 'user',
+//       _id: userId,
+//     },
+//     limit: 1,
+//   });
+
+//   const user = result.docs[0] as User;
+//   if (!user) {
+//     throw new Error('User not found');
+//   }
+//   user.passwordHash = await hashPassword(newPassword);
+//   user.updatedAt = new Date().toISOString();
+
+//   try {
+//     await db.insert(user);
+//     return user;
+//   } catch (error) {
+//     console.error('Error updating user details:', error);
+//     throw new Error('User update failed');
+//   }
+// };
+
+// services/PasswordService.ts
+import { EmailService } from './emailService.js';
+import { hashPassword } from '../utils/hash.js';
+import { generateToken, verifyToken } from '../utils/jwt.js';
+import { User } from '../models/User.js';
+import { UserRepository } from '../infrastructure/reposetories/userRepository.js';
+
+export class PasswordService {
+  private emailService = new EmailService();
+  private userRepository = new UserRepository();
+  private linkFE = 'http://localhost:3000/reset-password';
+
+  public async requestPasswordReset(email: string): Promise<void> {
+    const user = await this.userRepository.findByLogin(email);
+    if (!user) {
+      throw new Error('User with this email not found');
+    }
+
+    const token = generateToken(
+      { id: user._id as string, name: user.name, role: user.role },
+      '5m',
+    );
+
+    const resetLink =` ${this.linkFE}?token=${token}`;
+    const message = `To reset your password, click the link: ${resetLink}`;
+
+    await this.emailService.sendEmail({
+      to: user.email,
+      subject: 'Password Reset Request',
+      text: message,
+    });
   }
 
-  const payload = verifyToken(token);
-  const userId = payload.id;
+  public async resetPassword(token: string, newPassword: string): Promise<User | null> {
+    if (newPassword.length < 8) {
+      throw new Error('Password must be at least 8 characters long');
+    }
 
-  const result = await db.find({
-    selector: {
-      type: 'user',
-      _id: userId,
-    },
-    limit: 1,
-  });
+    const payload = verifyToken(token);
+    const user = await this.userRepository.findUserByID(payload.id);
 
-  const user = result.docs[0] as User;
-  if (!user) {
-    throw new Error('User not found');
-  }
-  user.passwordHash = await hashPassword(newPassword);
-  user.updatedAt = new Date().toISOString();
+    if (!user) {
+      throw new Error('User not found');
+    }
 
-  try {
-    await db.insert(user);
+    user.passwordHash = await hashPassword(newPassword);
+    user.updatedAt = new Date().toISOString();
+
+    await this.userRepository.insert(user);
     return user;
-  } catch (error) {
-    console.error('Error updating user details:', error);
-    throw new Error('User update failed');
   }
-};
+}

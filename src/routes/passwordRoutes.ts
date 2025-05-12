@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { handleRequestReset, handleResetPassword } from '../controllers/passwordController.js';
-
+import { PasswordController } from '../controllers/passwordController.js';
+// import { handleRequestReset, handleResetPassword } from '../controllers/passwordController.js';
+const passwordController = new PasswordController()
 const router = Router()
 
-router.post('/request-reset', handleRequestReset)
-router.post('/reset-password', handleResetPassword);
+router.post('/request-reset', passwordController.requestReset)
+router.post('/reset-password', passwordController.resetPassword);
 
 export default router
