@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import { createUser, deleteUser, findUserById, getAllUsers, updateUserDetails } from '../services/userServise.js';
-
+// import { createUser, deleteUser, findUserById, getAllUsers, updateUserDetails } from '../services/userServise.js';
+import { UserService } from '../services/userServise.js';
+const userService= new UserService()
 export const createUserController = async (req: Request, res: Response): Promise<void> => {
   const { name, email, password, fullName } = req.body;
   try {
-    const user = await createUser(name, email, password, fullName);
+    const user = await userService.createUser(name, email, password, fullName);
     res.status(201).json(user);
   } catch (error) {
     console.error('Error creating user:', error);
@@ -15,7 +16,7 @@ export const findUserByIdController = async (req: Request, res: Response): Promi
   const { id } = req.params;
 
   try {
-    const user = await findUserById(id);
+    const user = await userService.findUserById(id);
 
     if (!user) {
       res.status(404).json({ message: 'User not found' });
@@ -35,7 +36,7 @@ export const updateUserDetailsController = async (req: Request, res: Response): 
   const { name, email, fullName,password } = req.body; 
 
   try {
-    const updatedUser = await updateUserDetails(id, { name, email, fullName, password });
+    const updatedUser = await userService.updateUserDetails(id, { name, email, fullName, password });
     if (!updatedUser) {
       res.status(404).json({ message: 'User not found' });
       return;
@@ -52,7 +53,7 @@ export const deleteUserController = async (req: Request, res: Response): Promise
   const { id } = req.params;
 
   try {
-    const deletedUser = await deleteUser(id);
+    const deletedUser = await userService.deleteUser(id);
     if (!deletedUser) {
       res.status(404).json({ message: `User with id ${id} not found` });
       return;
@@ -65,7 +66,7 @@ export const deleteUserController = async (req: Request, res: Response): Promise
 };
 export const getAllUsersController = async (req: Request, res: Response): Promise<void> => {
   try {
-    const users = await getAllUsers();
+    const users = await userService.getAllUsers();
     res.status(200).json(users);
   } catch (error) {
     console.error('Error fetching users:', error);

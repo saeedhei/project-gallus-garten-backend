@@ -1,9 +1,12 @@
 import passport from "passport";
 import { Strategy as JwtStrategy, ExtractJwt, StrategyOptions } from "passport-jwt";
-import { findUserByIdFromDb } from "../services/userServise.js"; 
+// import { findUserByIdFromDb } from "../services/userServise.js"; 
+import { UserRepository } from "../infrastructure/reposetories/userRepository.js";
 import { User } from "../models/User.js";
 import { IJwtPayload } from "../utils/jwt.js";
 const SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+
+const userRepo=new UserRepository()
 
 const opts: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -15,7 +18,7 @@ passport.use(
     opts,
     async (jwt_payload: IJwtPayload, done: (error: any, user?: User | false) => void) => {
       try {
-        const user = await findUserByIdFromDb(jwt_payload.id);
+        const user = await userRepo.findUserByID(jwt_payload.id);
         if (user) {
           return done(null, user);
         } else {

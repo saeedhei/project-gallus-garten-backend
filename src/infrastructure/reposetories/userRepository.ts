@@ -38,15 +38,11 @@ export class UserRepository {
     await this.db.insert(user);
   }
 
-  async update(user: User): Promise<void> {
-    await this.db.insert(user);
-  }
-
   async delete(_id: string, _rev: string): Promise<void> {
     await this.db.destroy(_id, _rev);
   }
 
-  async getAll(): Promise<User[]> {
+  async getAllUsers(): Promise<User[]> {
     const result = await this.db.find({
       selector: { type: 'user' },
       fields: ['_id', 'name', 'email', 'role', 'fullName', 'createdAt', 'updatedAt'],
