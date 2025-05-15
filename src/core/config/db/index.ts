@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const envName = process.env.NODE_ENV || 'development';
 const envFile = `.env.${envName}`;
-const envPath = path.resolve(__dirname, '../../../', envFile);
+const envPath = path.resolve(__dirname, '../../../../', envFile);
 
 console.log(`Loading environment variables from: ${envPath}`);
 dotenv.config({ path: envPath });

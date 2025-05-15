@@ -1,4 +1,4 @@
-import '../src/core/config/index.js';
+import '../src/core/config/db/index.js';
 
 const requiredEnvKeys = [
   'PORT',
