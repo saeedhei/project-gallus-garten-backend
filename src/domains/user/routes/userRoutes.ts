@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/userController.js';
-import { authenticateJWT } from '../middlewares/authMiddleware.js';
-import { checkSelfOrAdmin } from '../middlewares/checkAdminRole.js';
+import { authenticateJWT } from '../../../core/config/middlewares/authMiddleware.js';
+import { checkSelfOrAdmin } from '../../../core/config/middlewares/checkAdminRole.js';
 
 const router = Router();
 const userController = new UserController();

@@ -6,9 +6,9 @@ import adminLogin from './adminLogin.js';
 import yearRoutes from './yearRoutes.js';
 import categoryRoutes from './categoryRoutes.js';
 
-import userRouter from './userRoutes.js';
-import loginRouter from './authRouter.js'
-import passwordRouter from './passwordRoutes.js'
+import userRouter from '../domains/user/routes/userRoutes.js';
+import loginRouter from '../domains/auth/routes/authRouter.js';
+import passwordRouter from '../domains/auth/routes/passwordRoutes.js';
 const router = express.Router();
 
 /* GET home page. */
@@ -24,6 +24,6 @@ router.use('/api/login', adminLogin);
 
 router.use('/', userRouter);
 router.use('/v1/user', loginRouter);
-router.use('/v1',passwordRouter);
+router.use('/v1', passwordRouter);
 
 export default router;

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { generateToken } from '../utils/jwt.js';
+import { generateToken } from '../../../core/config/utils/jwt.js';
 export const loginController = (req: Request, res: Response) => {
   const user = req.user as any;
 

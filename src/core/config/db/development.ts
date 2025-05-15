@@ -1,4 +1,4 @@
-import { AppConfig } from '../../types/typesDb.js';
+import { AppConfig } from "../../../domains/user/entities/types/typesDb.js";
 const config: AppConfig = {
   port: process.env.PORT || 3000,
   dbHost: process.env.DB_HOST,

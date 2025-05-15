@@ -1,12 +1,12 @@
-import passport from "passport";
-import { Strategy as JwtStrategy, ExtractJwt, StrategyOptions } from "passport-jwt";
-// import { findUserByIdFromDb } from "../services/userServise.js"; 
-import { UserRepository } from "../infrastructure/reposetories/userRepository.js";
-import { User } from "../models/User.js";
-import { IJwtPayload } from "../utils/jwt.js";
+import passport from 'passport';
+import { Strategy as JwtStrategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
+// import { findUserByIdFromDb } from "../services/userServise.js";
+import { UserRepository } from '../../../../domains/user/reposetories/userRepository.js';
+import { User } from '../../../../domains/user/models/User.js';
+import { IJwtPayload } from '../../utils/jwt.js';
 const SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
-const userRepo=new UserRepository()
+const userRepo = new UserRepository();
 
 const opts: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

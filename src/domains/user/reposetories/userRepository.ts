@@ -1,5 +1,5 @@
-import { useDatabase } from "../../core/config/couchdb.js";
-import { User } from "../../models/User.js";
+import { useDatabase } from "../../../core/config/db/couchdb.js";
+import { User } from '../models/User.js';
 
 export class UserRepository {
   private db = useDatabase();

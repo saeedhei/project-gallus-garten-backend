@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { User } from '../models/User.js';
+import { User } from '../../../domains/user/models/User.js';
 export const checkAdminRole = (req: Request, res: Response, next: NextFunction): void => {
   const user = req.user as User;
   // console.log(user);
@@ -10,11 +10,11 @@ export const checkAdminRole = (req: Request, res: Response, next: NextFunction):
 
   next();
 };
-export const checkSelfOrAdmin = (req: Request, res: Response, next: NextFunction):void => {
+export const checkSelfOrAdmin = (req: Request, res: Response, next: NextFunction): void => {
   const user = req.user as User;
-    console.log(user);
+  console.log(user);
   const { id } = req.params;
-    console.log(id);
+  console.log(id);
   if (user?.role === 'administrator' || user?._id === id) {
     return next();
   }
