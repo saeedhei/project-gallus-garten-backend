@@ -1,5 +1,5 @@
 // import 'dotenv/config';
-import config from '../core/config/index.js';
+import config from '../core/config/db/index.js';
 import app from '../app.js';
 import debug from 'debug';
 import http from 'http';

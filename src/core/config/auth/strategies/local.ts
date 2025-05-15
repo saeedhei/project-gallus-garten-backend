@@ -1,13 +1,13 @@
 import { Strategy as LocalStrategy } from 'passport-local';
 import passport from 'passport';
-import { comparePassword } from '../utils/hash.js';
-import { UserService } from '../services/userServise.js';
-const userService =new UserService()
+import { comparePassword } from '../../utils/hash.js';
+import { UserService } from '../../../../domains/user/services/userServise.js';
+const userService = new UserService();
 
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'login', 
+      usernameField: 'login',
       passwordField: 'password',
     },
     async (login, password, done) => {
@@ -22,8 +22,8 @@ passport.use(
           return done(null, false, { message: 'Incorrect password' });
         }
 
-        const { passwordHash, ...safeUser} = user;
-        return done(null, safeUser); 
+        const { passwordHash, ...safeUser } = user;
+        return done(null, safeUser);
       } catch (err) {
         return done(err);
       }

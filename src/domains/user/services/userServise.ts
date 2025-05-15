@@ -1,7 +1,7 @@
-import { hashPassword } from '../utils/hash.js';
-import { generateId } from '../utils/uuid.js';
+import { hashPassword } from '../../../core/config/utils/hash.js';
+import { generateId } from '../../../core/config/utils/uuid.js';
 import { userSchema } from '../schemas/userSchema.js';
-import { UserRepository } from '../infrastructure/reposetories/userRepository.js';
+import { UserRepository } from '../reposetories/userRepository.js';
 import { User } from '../models/User.js';
 
 export class UserService {

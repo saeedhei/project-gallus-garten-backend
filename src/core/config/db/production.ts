@@ -1,6 +1,6 @@
-import { AppConfig } from '../../types/typesDb.js';
+import { AppConfig } from "../../../domains/user/entities/types/typesDb.js";
 const config: AppConfig = {
-  port: process.env.PORT || 4000,
+  port: process.env.PORT || 8080,
   dbHost: process.env.DB_HOST,
   dbPort: process.env.DB_PORT,
   dbUser: process.env.DB_USER,
@@ -13,6 +13,6 @@ const config: AppConfig = {
   smtpPort: process.env.SMTP_PORT,
   smtpUser: process.env.SMTP_USER,
   smtpPass: process.env.SMTP_PASS,
-  smtpSecure: process.env.SMTP_SECURE === 'false',
+  smtpSecure: process.env.SMTP_SECURE === 'true',
 };
 export default config;
