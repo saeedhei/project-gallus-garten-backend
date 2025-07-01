@@ -5,9 +5,11 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { fileURLToPath } from 'url';
-import indexRouter from './routes/index.js';
+
 import { testConnection } from './core/config/testConnection.js';
-import passport from './core/config/passport/passport.js'
+import passport from './core/config/passport/passport.js';
+
+import indexRouter from './routes/index.js';
 
 const app: express.Application = express();
 
@@ -23,9 +25,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize())
+app.use(passport.initialize());
+
 app.use('/', indexRouter);
-// app.use('api/user',userRouter)
 
 async () => {
   try {

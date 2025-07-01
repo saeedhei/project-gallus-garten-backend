@@ -1,34 +1,20 @@
-import passport from "passport";
-import { Strategy as JwtStrategy, ExtractJwt, StrategyOptions } from "passport-jwt";
-// import { findUserByIdFromDb } from "../services/userServise.js"; 
-import { UserRepository } from "../infrastructure/reposetories/userRepository.js";
-import { User } from "../models/User.js";
-import { IJwtPayload } from "../utils/jwt.js";
-const SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import passport from 'passport';
 
-const userRepo=new UserRepository()
+const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
 
-const opts: StrategyOptions = {
+const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: SECRET,
+  secretOrKey: JWT_SECRET,
 };
 
 passport.use(
-  new JwtStrategy(
-    opts,
-    async (jwt_payload: IJwtPayload, done: (error: any, user?: User | false) => void) => {
-      try {
-        const user = await userRepo.findUserByID(jwt_payload.id);
-        if (user) {
-          return done(null, user);
-        } else {
-          return done(null, false);
-        }
-      } catch (err) {
-        return done(err, false);
-      }
-    },
-  ),
+  new JwtStrategy(options, (payload, done) => {
+    // Normally you'd look up user in DB — here it's static:
+    if (payload.login === 'admin') {
+      return done(null, { login: 'admin' });
+    } else {
+      return done(null, false);
+    }
+  }),
 );
-
-export default passport;

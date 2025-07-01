@@ -1,2 +1,3 @@
-import './jwt.js'
-import './local.js'
+// src\strategies\index.ts
+import './jwt.js';
+import './local.js';

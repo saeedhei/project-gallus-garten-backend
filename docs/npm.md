@@ -34,7 +34,7 @@ npm outdated
 npm update
 
 git add .
-git commit -m "db updated"
+git commit -m "backend login added"
 git push origin main
 
 git pull origin main
@@ -60,3 +60,8 @@ git rm --cached .env.test
 git commit -m "Stop tracking .env.test"
 Check for Overrides
 !.env.test
+
+
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
