@@ -1,3 +1,9 @@
+git add .
+git commit -m "arbeit zeit added"
+git push origin main
+
+
+
 # You have these commits:
 A---B---C  (origin/main)
         \

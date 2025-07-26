@@ -12,7 +12,7 @@ import express, { Request, Response } from 'express';
 // import passwordRouter from './passwordRoutes.js';
 
 import authRoutes from '../modules/admin/auth.routes.js';
-import dashboardRoutes from '../modules/admin/dashboard.routes.js';
+import dashboardRoutes from '../modules/admin/dashboard/dashboard.routes.js';
 
 const router = express.Router();
 
