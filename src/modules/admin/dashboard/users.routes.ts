@@ -2,12 +2,11 @@
 import express, { Request, Response, Router } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { projectRoot } from '../../../core/config/root.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const usersFilePath = path.join(__dirname, '../../../users.json');
+const usersFilePath = path.join(projectRoot, 'src/users.json');
+console.log('Root: ' + projectRoot);
+console.log('users: ' + usersFilePath);
 
 const router: Router = express.Router();
 

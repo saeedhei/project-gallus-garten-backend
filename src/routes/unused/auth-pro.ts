@@ -2,13 +2,11 @@ import express, { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod'; // برای اعتبارسنجی نوع‌محور
 import { fromZodError } from 'zod-validation-error'; // مدیریت خطاهای خوانا
-import dotenv from 'dotenv';
-import rateLimit from 'express-rate-limit'; // محافظت در برابر brute-force
 
+import rateLimit from 'express-rate-limit'; // محافظت در برابر brute-force
+import 'dotenv/config';
 const router = express.Router();
 
-// 1. تنظیمات محیطی
-dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) throw new Error('❌ JWT_SECRET must be defined in .env');
 

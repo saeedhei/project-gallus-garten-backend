@@ -1,3 +1,4 @@
+// src\core\config\production.ts
 import { AppConfig } from '../../types/typesDb.js';
 const config: AppConfig = {
   port: process.env.PORT || 8080,

@@ -1,4 +1,4 @@
-// import 'dotenv/config';
+// src\bin\www.ts
 import config from '../core/config/index.js';
 import app from '../app.js';
 import debug from 'debug';

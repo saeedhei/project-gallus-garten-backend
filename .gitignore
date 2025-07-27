@@ -5,3 +5,4 @@ dist
 .env.production
 .env.test
 users.json
+sftp.json
