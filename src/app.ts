@@ -5,16 +5,19 @@ import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import { fileURLToPath } from 'url';
 
-import { projectRoot } from './core/config/root.js';
 import { testConnection } from './core/config/testConnection.js';
 import passport from './core/config/passport/passport.js';
 
 import indexRouter from './routes/index.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app: express.Application = express();
 
-app.set('views', path.join(projectRoot, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(cors());
@@ -22,7 +25,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(projectRoot, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/', indexRouter);
@@ -48,6 +51,4 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-console.log('Project root:', projectRoot);
-console.log('Views dir:', path.join(projectRoot, 'views'));
 export default app;

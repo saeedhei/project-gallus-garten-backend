@@ -12,3 +12,7 @@ npm run serve
 
 pm2 logs GG-Backend
 
+npm run build \
+  && pm2 delete GG-Backend || true \
+  && npm run serve \
+  && pm2 logs GG-Backend
