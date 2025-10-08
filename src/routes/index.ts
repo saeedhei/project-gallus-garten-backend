@@ -15,6 +15,7 @@ import authRoutes from '../modules/admin/auth.routes.js';
 import dashboardRoutes from '../modules/admin/dashboard/dashboard.routes.js';
 
 import kontaktRouter from './kontakt.js';
+import aiRoutes from './ai.js';
 
 const router = express.Router();
 
@@ -36,5 +37,6 @@ router.get('/', (req: Request, res: Response): void => {
 router.use('/v3/auth/login', authRoutes);
 router.use('/v3/dashboard', dashboardRoutes);
 router.use('/contact', kontaktRouter);
+router.use('/v3/ai', aiRoutes);
 
 export default router;

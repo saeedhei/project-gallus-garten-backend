@@ -30,6 +30,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
       text,
     });
 
+    console.log('Received contact request:', req.body);
     res.json({ success: true });
   } catch (err) {
     console.error('Telegram API Error:', err);
